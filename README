@@ -1,0 +1,6 @@
+Used for removing GPS traces and adding in virtual power for an indoor trainer. The output FIT files can be uploaded to Strava. The program supports a non-linear fitting curve designed to be used with fluid trainers. If you want to get fancy you could fit a curve with a tempature sensor on the unit to address the problem that resistance increases as the silicone resistance unit heats up. 
+
+The default curve is about right for a CycleOps Fluid^2
+
+To get it working update the links in the the fit_api directory to source links of SDK20.22.00 that can be found here
+https://www.thisisant.com/resources/fit
