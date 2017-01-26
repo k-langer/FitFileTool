@@ -5,6 +5,7 @@ WARNING=-Wall -Wformat=0
 TARGET=Addpower
 API=fit_api/
 HEADERS=headers/
+UNDEF=FIT_USE_STDINT_H
 
 OBJDIR=obj
 all: $(TARGET)
@@ -19,7 +20,7 @@ OBJS = obj/addpower.o \
 $(OBJDIR)/%.o: %.c 
 	$(CC) -c $(CFLAGS) $(OPT) -I $(HEADERS) -I $(API) $(WARNING) -o $@ $<
 $(OBJDIR)/%.o: $(API)/%.c 
-	$(CC) -c $(CFLAGS) $(OPT) -I $(HEADERS) -I $(API) $(WARNING) -o $@ $<
+	$(CC) -c $(CFLAGS) $(OPT) -u $(UNDEF) -I $(API) $(WARNING) -o $@ $<
 
 $(TARGET): $(OBJS)
 	$(CC) -o $@ $^ $(CFLAGS)
@@ -27,4 +28,4 @@ $(TARGET): $(OBJS)
 run: 
 	./$(TARGET) workouts/one.fit 
 clean:  
-	rm -f *.o obj/*.o $(TARGET) test*fit
+	rm -f *.o obj/*.o $(TARGET) test*fit PowerAdd*fit
