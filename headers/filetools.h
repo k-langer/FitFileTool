@@ -8,6 +8,11 @@
 #include "stdlib.h" 
 #include "math.h"
 
+#ifdef WINDOWS
+//#include "windows.h"
+//#include "tchar.h"
+#endif
+
 #include "fit_convert.h"
 #include "fit_product.h"
 #include "fit_example.h"
@@ -23,5 +28,5 @@ void WriteMessageDefinition(FIT_UINT8 local_mesg_number, const void *mesg_def_po
 int done(FIT_CONVERT_RETURN convert_return, FILE *file);
 void powerCfg(char* file) ;
 double powerEst(double speed) ;
-
+char*getFileName(char* file,char*buffer);
 #endif

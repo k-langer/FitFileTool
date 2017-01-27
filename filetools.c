@@ -71,14 +71,25 @@ int done(FIT_CONVERT_RETURN convert_return, FILE *file) {
    fclose(file);
    return 0; 
 }
+char * getFileName(char* file, char * buffer) {
+    FILE *input_file = fopen(file, "r");
+    if( input_file == NULL ){ return "workout.fit"; }
+    if(fgets(buffer, 80, input_file) != NULL)
+    if( fgets(buffer, 80, input_file) != NULL )
+        return strtok(buffer,"\n");
+    return "workout.fit";
+}
 void powerCfg(char* file) {
     FILE *input_file = fopen(file, "r");
-    if( input_file == NULL ){ return; }
-    printf("Opening power cfg.. %s\n",file);
+    if( input_file == NULL ){ 
+        printf("Add a custom power file with %s\n", file);
+        return; 
+    }
+    printf("Opening configuration.. %s\n",file);
     power_val = 1;  
     char buffer[ 80 ]; 
     char *tok;
-    while( fgets(buffer, 80, input_file) != NULL ){
+    if( fgets(buffer, 80, input_file) != NULL ){
         tok = strtok( buffer, " " );
         while( tok != NULL ){
             if (power_order >4) { break; }

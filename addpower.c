@@ -19,27 +19,37 @@ int main(int argc, char* argv[])
    int timeOffset = 0; 
    double speedMph; 
    double powerEstm; 
-   
+  
    powerCfg("pwr.cfg");
     
    data_crc = 0;
    fp = fopen("PowerAdded.fit", "w+b");
    WriteFileHeader(fp);
 
+   char * fitInput; 
 
+   #ifdef WINDOWS
+        char buffer[80]; 
+        fitInput = getFileName("pwr.cfg",buffer);
+        printf("Converting fit file: %s\n",fitInput);
+   #else
+   fitInput = argv[1]; 
    if (argc < 2)
    {
       printf("usage: decode.exe <fit file>\n");
-      return FIT_FALSE;
    }
-   printf("Testing file conversion using %s file...\n", argv[1]);
+   #endif
+   printf("Testing file conversion using %s file...\n", fitInput);
    FitConvert_Init(FIT_TRUE);
 
-   if((file = fopen(argv[1], "rb")) == NULL)
+   if((file = fopen(fitInput, "rb")) == NULL)
    {
-      printf("Error opening file %s.\n", argv[1]);
+      printf("Error opening file %s.\n", fitInput);
+      #ifdef WINDOWS 
+      getchar();
+      #endif
       return FIT_FALSE;
-   }
+   } 
    while(!feof(file) && (convert_return == FIT_CONVERT_CONTINUE))
    {
       for(buf_size=0;(buf_size < sizeof(buf)) && !feof(file); buf_size++)
@@ -103,6 +113,9 @@ int main(int argc, char* argv[])
    fwrite(&data_crc, 1, sizeof(FIT_UINT16), fp);
    WriteFileHeader(fp);
    fclose(fp);
-
+   #ifdef WINDOWS
+   printf("All Done, Press any key to close");
+   getchar();
+   #endif
    return done(convert_return,file);
 }
