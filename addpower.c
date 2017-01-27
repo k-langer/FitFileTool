@@ -73,12 +73,13 @@ int main(int argc, char* argv[])
                      FIT_RECORD_MESG *record = (FIT_RECORD_MESG *) mesg;
 		             if(timeOffset == 0 ) { timeOffset = record->timestamp; }	
 		             speedMph = record->speed*0.00223694; 
-                     powerEstm = 0.0191*(speedMph*speedMph*speedMph)+0.0673*speedMph*speedMph + 4.2639*speedMph; 
-                    /*//Debug
+                     powerEstm = powerEst(speedMph);
+                     //powerEstm = 0.0191*(speedMph*speedMph*speedMph)+0.0673*speedMph*speedMph + 4.2639*speedMph; 
+                    #ifdef DEBUG
         		     printf("%d, %d, %.2f, %.2f",
             		 	record->timestamp-timeOffset,record->heart_rate, speedMph,powerEst(speedMph));
                      printf("\n");
-                    */
+                    #endif
                      record->power = (FIT_UINT16) powerEstm;
                      WriteMessageDefinition(mesg_num, fit_mesg_defs[FIT_MESG_RECORD], FIT_RECORD_MESG_DEF_SIZE,fp);
                      WriteMessage(mesg_num,mesg,FIT_RECORD_MESG_SIZE,fp);

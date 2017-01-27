@@ -6,6 +6,7 @@ TARGET=Addpower
 API=fit_api/
 HEADERS=headers/
 UNDEF=FIT_USE_STDINT_H
+#DEBUG=-D DEBUG
 
 OBJDIR=obj
 all: $(TARGET)
@@ -18,7 +19,7 @@ OBJS = obj/addpower.o \
 	obj/fit_ram.o 
 
 $(OBJDIR)/%.o: %.c 
-	$(CC) -c $(CFLAGS) $(OPT) -I $(HEADERS) -I $(API) $(WARNING) -o $@ $<
+	$(CC) -c $(CFLAGS) $(OPT) $(DEBUG) -I $(HEADERS) -I $(API) $(WARNING) -o $@ $<
 $(OBJDIR)/%.o: $(API)/%.c 
 	$(CC) -c $(CFLAGS) $(OPT) -u $(UNDEF) -I $(API) $(WARNING) -o $@ $<
 

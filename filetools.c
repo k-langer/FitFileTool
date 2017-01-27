@@ -74,6 +74,7 @@ int done(FIT_CONVERT_RETURN convert_return, FILE *file) {
 void powerCfg(char* file) {
     FILE *input_file = fopen(file, "r");
     if( input_file == NULL ){ return; }
+    printf("Opening power cfg.. %s\n",file);
     power_val = 1;  
     char buffer[ 80 ]; 
     char *tok;
@@ -81,20 +82,25 @@ void powerCfg(char* file) {
         tok = strtok( buffer, " " );
         while( tok != NULL ){
             if (power_order >4) { break; }
-            sscanf(tok, "%lf", &power_fit[power_order]); 
+            //sscanf(tok, "%lf", &power_fit[power_order]); 
+            power_fit[power_order] = atof(tok);
             power_order++; 
             tok = strtok( NULL, " ");
         }
     }
+    for (int i = 0; i < power_order-1; i++ ){ 
+        printf("%f*x^%d +",power_fit[i],power_order-i-1);  
+    }
+    printf("%f\n",power_fit[power_order-1]);
 }
 double powerEst(double speed) {
     double power = 0; 
     // speed is in MPH
     if (power_val == 1) {
-    for (int i = 0; i < power_order; i++ ) 
-        power += power_fit[power_order]*pow(speed,power_order-i); 
-    }
-    else {
+        for (int i = 0; i < power_order; i++ ){
+            power += power_fit[i]*pow(speed,power_order-i-1); 
+        }
+    } else {
          power = 0.0191*(speed*speed*speed)+0.0673*speed*speed + 4.2639*speed;  
     }
     return power;
