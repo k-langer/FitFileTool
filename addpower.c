@@ -114,8 +114,8 @@ int main(int argc, char* argv[])
    WriteFileHeader(fp);
    fclose(fp);
    #ifdef WINDOWS
-   printf("All Done, Press any key to close");
    getchar();
+   printf("All Done, Press any key to close");
    #endif
    return done(convert_return,file);
 }

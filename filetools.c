@@ -41,35 +41,40 @@ void WriteMessageDefinition(FIT_UINT8 local_mesg_number, const void *mesg_def_po
    WriteData(mesg_def_pointer, mesg_def_size, fp);
 }
 int done(FIT_CONVERT_RETURN convert_return, FILE *file) {
+   int ret = 0; 
    if (convert_return == FIT_CONVERT_ERROR)
    {   
       printf("Error decoding file.\n");
       fclose(file);
-      return 1;
+      ret = 1;
    }   
    if (convert_return == FIT_CONVERT_CONTINUE)
    {   
       printf("Unexpected end of file.\n");
       fclose(file);
-      return 1;
+      ret =  1;
    }   
    if (convert_return == FIT_CONVERT_DATA_TYPE_NOT_SUPPORTED)
    {   
       printf("File is not FIT.\n");
       fclose(file);
-      return 1;
+      ret =  1;
    }   
    if (convert_return == FIT_CONVERT_PROTOCOL_VERSION_NOT_SUPPORTED)
    {   
       printf("Protocol version not supported.\n");
       fclose(file);
-      return 1;
+      ret =  1;
    }   
    if (convert_return == FIT_CONVERT_END_OF_FILE)
       printf("File converted successfully.\n");
 
    fclose(file);
-   return 0; 
+   #ifdef WINDOWS
+   getchar();
+   printf("All Done, Press any key to close");
+   #endif
+   return ret; 
 }
 char * getFileName(char* file, char * buffer) {
     FILE *input_file = fopen(file, "r");

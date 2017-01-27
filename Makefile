@@ -3,7 +3,7 @@ CC=gcc
 #OPT=-Ofast -ffp-contract=off 
 CFLAGS=-std=gnu99 -Wno-unused-result -lm
 WARNING=-Wall -Wformat=0
-TARGET=Addpower
+TARGET=AddVirtualPower
 API=fit_api/
 HEADERS=headers/
 UNDEF=FIT_USE_STDINT_H
@@ -32,9 +32,9 @@ $(TARGET): $(OBJS)
 	$(CC) -o $@ $^ $(CFLAGS)
 
 windows: $(OBJS)
-	$(CC) -o WIN_$(TARGET) $^ $(CFLAGS)
+	$(CC) -o bin/$(TARGET).exe $^ $(CFLAGS)
 
 run: 
 	./$(TARGET) workouts/one.fit 
 clean:  
-	rm -f *.o obj/*.o $(TARGET) test*fit PowerAdd*fit WIN_$(TARGET)
+	rm -f *.o obj/*.o $(TARGET) test*fit PowerAdd*fit bin/*exe
