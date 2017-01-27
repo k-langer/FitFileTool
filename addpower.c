@@ -113,9 +113,5 @@ int main(int argc, char* argv[])
    fwrite(&data_crc, 1, sizeof(FIT_UINT16), fp);
    WriteFileHeader(fp);
    fclose(fp);
-   #ifdef WINDOWS
-   getchar();
-   printf("All Done, Press any key to close");
-   #endif
    return done(convert_return,file);
 }

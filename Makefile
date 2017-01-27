@@ -3,7 +3,7 @@ CC=gcc
 #OPT=-Ofast -ffp-contract=off 
 CFLAGS=-std=gnu99 -Wno-unused-result -lm
 WARNING=-Wall -Wformat=0
-TARGET=AddVirtualPower
+TARGET=AddPower
 API=fit_api/
 HEADERS=headers/
 UNDEF=FIT_USE_STDINT_H
